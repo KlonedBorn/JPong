@@ -1,11 +1,13 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
 
+import entity.Paddle;
 import utility.Constants;
 
 // Copyright 2022 Kyle King
@@ -25,23 +27,32 @@ import utility.Constants;
 public class Game extends JPanel implements Runnable{
 
     private AtomicBoolean game_running;
-	private Rectangle panel;
 	private Thread game_thread;
-
+	private Paddle pads[];
+	private static final int LEFT = 0 , RIGHT = 1;
     public Game(){
-		this.panel = new Rectangle();
 		this.game_running = new AtomicBoolean(true);
 		this.game_thread = new Thread(this);
+		this.pads = new Paddle[]{
+			new Paddle("Left", 10, 10),
+			new Paddle("Right", 1066 - Constants.PADDLE_WIDTH - 10,683 - Constants.PADDLE_HEIGHT- 10)
+		};
+		System.out.println();
         createAndShowGui();
 		this.game_thread.start();
     }
 
     public void update(){
-		this.getBounds(panel);
+		
     }
 
     @Override protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+		Graphics2D gd = (Graphics2D)g;
+		for(Paddle pad : pads){
+			gd.setColor(pad.getFillColor());
+			gd.fillRect(pad.x, pad.y, pad.width, pad.height);
+		}
     }
 
     public void createAndShowGui(){

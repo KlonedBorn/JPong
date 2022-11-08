@@ -15,13 +15,11 @@
 package entity;
 
 import java.awt.Rectangle;
-
-import javax.sound.sampled.Clip;
-
 import utility.Constants;
 
 public class Paddle extends Rectangle{
-    private int init_x , init_y , speed , score;
+    private int init_x , init_y , speed;
+    public int score;
     private String player_name;
     private java.awt.Color fill_color;
 
@@ -41,6 +39,16 @@ public class Paddle extends Rectangle{
 
     public void move(int direction){
         direction = (int)Constants.clamp(direction, -1, 1);
-        
+    }
+
+    public String getPlayer_name() {
+        return player_name;
+    }
+
+    public java.awt.Color getFillColor() {
+        return fill_color;
+    }
+    public static int getRightTopCorner(Paddle p){
+        return p.x + p.width;
     }
 }

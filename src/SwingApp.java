@@ -25,11 +25,13 @@ public class SwingApp extends JFrame{
         app.setMaximumSize(Constants.PREF_SCREEN_SIZE);
         app.setTitle("JPong");
         app.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        app.add(new Game());
-        app.setVisible(true);
+        Game game = new Game();
+        app.add(game);
+        game.setPreferredSize(Constants.PREF_SCREEN_SIZE);
         app.pack();
+        app.setVisible(true);
         app.setLocationRelativeTo(null);
-        System.out.println(app.getSize());
+        app.setResizable(false);
     }
     /**
      * Driver
