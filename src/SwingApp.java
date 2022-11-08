@@ -1,6 +1,8 @@
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import utility.Constants;
+
 // Copyright 2022 Kyle King
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,26 +17,20 @@ import javax.swing.SwingUtilities;
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-public class App extends JFrame {
-
-    public App() {
-        this.setTitle("Simple Ping-Pong");
-        this.setPreferredSize(utility.Constants.SCREEN_DIMENSION);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setResizable(false);
-        this.setVisible(true);
-        Game game = new Game();
-        this.add(game);
-        this.requestFocus();
-        this.addKeyListener(game);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        game.start();
+public class SwingApp extends JFrame{
+    private static void createAndShowGui() {
+        SwingApp app = new SwingApp();
+        app.setPreferredSize(Constants.PREF_SCREEN_SIZE);
+        app.setMinimumSize(Constants.PREF_SCREEN_SIZE);
+        app.setMaximumSize(Constants.PREF_SCREEN_SIZE);
+        app.setTitle("JPong");
+        app.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        app.add(new Game());
+        app.setVisible(true);
+        app.pack();
+        app.setLocationRelativeTo(null);
     }
-    
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(()->{
-            App gameApp = new App();
-        });
+        SwingUtilities.invokeLater(()->SwingApp.createAndShowGui());
     }
 }

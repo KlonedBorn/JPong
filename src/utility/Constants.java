@@ -17,6 +17,13 @@ package utility;
 import java.awt.Dimension;
 
 public class Constants {
-    public static final int SCREEN_WIDTH = 1080, SCREEN_HEIGHT = 720, FPS_SET = 60,UPS_SET=120,SPEED_SET = 15;
-    public static final Dimension SCREEN_DIMENSION = new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT);
+    public static final int PREF_SCREEN_WIDTH = 1080, 
+                            PREF_SCREEN_HEIGHT = 720,
+                            MIN_SCREEN_WIDTH = PREF_SCREEN_WIDTH,
+                            MIN_SCREEN_HEIGHT = PREF_SCREEN_WIDTH,
+                            MAX_SCREEN_WIDTH = PREF_SCREEN_WIDTH,
+                            MAX_SCREEN_HEIGHT = PREF_SCREEN_WIDTH,
+                            FPS_SET = 60,
+                            UPS_SET = 120;
+    public static final Dimension PREF_SCREEN_SIZE = new Dimension(PREF_SCREEN_WIDTH,PREF_SCREEN_HEIGHT);
 }
