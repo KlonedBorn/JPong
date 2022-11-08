@@ -29,7 +29,12 @@ public class SwingApp extends JFrame{
         app.setVisible(true);
         app.pack();
         app.setLocationRelativeTo(null);
+        System.out.println(app.getSize());
     }
+    /**
+     * Driver
+     * @param args
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(()->SwingApp.createAndShowGui());
     }

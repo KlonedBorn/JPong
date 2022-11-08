@@ -1,7 +1,12 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
+
+import utility.Constants;
 
 // Copyright 2022 Kyle King
 // 
@@ -17,24 +22,75 @@ import javax.swing.JPanel;
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-public class Game extends JPanel{
+public class Game extends JPanel implements Runnable{
+
+    private AtomicBoolean game_running;
+	private Rectangle panel;
+	private Thread game_thread;
 
     public Game(){
+		this.panel = new Rectangle();
+		this.game_running = new AtomicBoolean(true);
+		this.game_thread = new Thread(this);
         createAndShowGui();
+		this.game_thread.start();
+    }
+
+    public void update(){
+		this.getBounds(panel);
+    }
+
+    @Override protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
     }
 
     public void createAndShowGui(){
         this.setBackground(new Color(51, 51, 51));
     }
 
-    public void update(double dt){
+	@Override public void run() {
+        while(game_running.get()){
+		double timePerFrame = 1000000000.0 /  utility.Constants.FPS_SET;
+		double timePerUpdate = 1000000000.0 / utility.Constants.UPS_SET;
 
+		long previousTime = System.nanoTime();
+
+		int frames = 0;
+		int updates = 0;
+		long lastCheck = System.currentTimeMillis();
+
+		double deltaU = 0;
+		double deltaF = 0;
+
+		while (true) {
+			long currentTime = System.nanoTime();
+			deltaU += (currentTime - previousTime) / timePerUpdate;
+			deltaF += (currentTime - previousTime) / timePerFrame;
+			previousTime = currentTime;
+
+			if (deltaU >= 1) {
+				update();
+				updates++;
+				deltaU--;
+			}
+
+			if (deltaF >= 1) {
+                this.repaint();
+				frames++;
+				deltaF--;
+			}
+
+			if (System.currentTimeMillis() - lastCheck >= 1000) {
+				lastCheck = System.currentTimeMillis();
+				System.out.println("FPS: " + frames + " | UPS: " + updates);
+				frames = updates = 0;
+			}
+		}
+        }
     }
-    
-    @Override
-    protected void paintComponent(Graphics g) {
-        // TODO Auto-generated method stub
-        super.paintComponent(g);
-    }
-    
+
+	@Override
+	public Dimension getPreferredSize() {
+		return Constants.PREF_SCREEN_SIZE;
+	}
 }
