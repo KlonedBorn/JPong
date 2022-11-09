@@ -28,8 +28,13 @@ public class Constants {
                             MAX_SCREEN_HEIGHT = PREF_SCREEN_WIDTH,
                             FPS_SET = 60,
                             UPS_SET = 120,
-                            PADDLE_WIDTH = 30,
-                            PADDLE_HEIGHT = 150,
-                            PADDLE_SPEED = 12;
+                            PADDLE_WIDTH = 25,
+                            PADDLE_HEIGHT = 125,
+                            PADDLE_SPEED = 8,
+                            BALL_WIDTH = 25,
+                            BALL_HEIGHT = 25,
+                            BALL_X_SPEED = 2,
+                            BALL_Y_SPEED = 2,
+                            WIN_CONDITION = 5;
     public static final Dimension PREF_SCREEN_SIZE = new Dimension(PREF_SCREEN_WIDTH,PREF_SCREEN_HEIGHT);
 }

@@ -14,41 +14,40 @@
 
 package entity;
 
-import java.awt.Rectangle;
+import java.util.HashMap;
 import utility.Constants;
-
-public class Paddle extends Rectangle{
-    private int init_x , init_y , speed;
-    public int score;
+public class Paddle extends PongEntity{
     private String player_name;
-    private java.awt.Color fill_color;
+    private int keys[];
 
-    public Paddle(String name , int x, int y) {
+    public int score;
+
+    public Paddle(String name , int x, int y, int keys[]) {
         super(x, y, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT);
-        this.init_x = x;
-        this.init_y = y;
         this.player_name = name;
         this.score = 0;
-        this.fill_color = java.awt.Color.white;
+        this.keys = keys;
     }
 
-    public void reset(){
-        setLocation(init_x, init_y);
+    @Override public void reset(){
+        super.reset();
         this.score = 0;
     }
 
-    public void move(int direction){
-        direction = (int)Constants.clamp(direction, -1, 1);
-    }
-
-    public String getPlayer_name() {
+    public String getPlayerName() {
         return player_name;
     }
 
-    public java.awt.Color getFillColor() {
-        return fill_color;
+    @Override public void update() {
+        int offset_y = this.y;
+        if(keyStates.getOrDefault(keys[0], false)) {
+            offset_y -= Constants.PADDLE_SPEED;
+            this.y = Math.max(offset_y, 0);
+        }
+        if(keyStates.getOrDefault(keys[1], false)) {
+            offset_y += Constants.PADDLE_SPEED;
+            this.y = Math.min(offset_y, this.container.height - Constants.PADDLE_HEIGHT);
+        }
     }
-    public static int getRightTopCorner(Paddle p){
-        return p.x + p.width;
-    }
+    public static HashMap<Integer,Boolean> keyStates = new HashMap<>();
 }

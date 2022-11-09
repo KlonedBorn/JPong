@@ -28,6 +28,8 @@ public class SwingApp extends JFrame{
         Game game = new Game();
         app.add(game);
         game.setPreferredSize(Constants.PREF_SCREEN_SIZE);
+        app.requestFocus();
+        app.addKeyListener(game);
         app.pack();
         app.setVisible(true);
         app.setLocationRelativeTo(null);
